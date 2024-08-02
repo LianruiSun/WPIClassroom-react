@@ -19,11 +19,10 @@ const Sidebar = ({ open, onClose }) => {
 
   return (
     <Drawer
-      variant="persistent"
+      variant="temporary"
       open={open}
+      onClose={onClose}
       sx={{
-        width: 240,
-        flexShrink: 0,
         [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box' },
       }}
     >
@@ -50,4 +49,3 @@ const Sidebar = ({ open, onClose }) => {
 };
 
 export default Sidebar;
-

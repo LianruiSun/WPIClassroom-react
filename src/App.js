@@ -1,4 +1,3 @@
-// App.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { CssBaseline, Box, IconButton, AppBar, Toolbar } from '@mui/material';
@@ -6,6 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import Sidebar from './components/Sidebar';
 import BuildingPage from './pages/BuildingPage';
+import RoomDetailPage from './pages/RoomDetailPage';
 import HomePage from './pages/HomePage';
 import './App.css';
 import '@fontsource/poppins';
@@ -56,13 +56,14 @@ function App() {
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  height: 64, // Fixed height for the AppBar
+                  height: 64,
+                  marginRight: 7,
                 }}
               >
                 <Box
                   sx={{
-                    height: '100%', // Full height of the AppBar
-                    maxHeight: 50, // Maximum height for the logo
+                    height: '100%',
+                    maxHeight: 50,
                   }}
                 >
                   <WpiLogo sx={{ height: '100%', width: 'auto' }} />
@@ -84,6 +85,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/:buildingName" element={<BuildingPage />} />
+              <Route path="/:buildingName/:room" element={<RoomDetailPage />} />
             </Routes>
           </Box>
         </Box>

@@ -4,15 +4,6 @@ import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        height: '100vh',
-        p: 3,
-      }}
-    >
       <Box
         sx={{
             display: 'flex',
@@ -40,7 +31,6 @@ const HomePage = () => {
           Get Started
         </Button>
       </Box>
-    </Box>
   );
 };
 
