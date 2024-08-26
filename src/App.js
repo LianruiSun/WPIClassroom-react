@@ -7,6 +7,7 @@ import Sidebar from './components/Sidebar';
 import BuildingPage from './pages/BuildingPage';
 import RoomDetailPage from './pages/RoomDetailPage';
 import HomePage from './pages/HomePage';
+import TestPage from './pages/TestPage';
 import './App.css';
 import '@fontsource/poppins';
 import WpiLogo from './components/WpiLogo';
@@ -31,7 +32,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', height: '100%'}}>
           <CssBaseline />
           <AppBar
             position="fixed"
@@ -76,7 +77,6 @@ function App() {
             component="main"
             sx={{
               flexGrow: 1,
-              p: 3,
               marginLeft: sidebarOpen ? '240px' : '0',
               transition: 'margin-left 0.3s',
             }}
@@ -86,6 +86,7 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/:buildingName" element={<BuildingPage />} />
               <Route path="/:buildingName/:room" element={<RoomDetailPage />} />
+              <Route path="/Test" element={<TestPage />} />
             </Routes>
           </Box>
         </Box>

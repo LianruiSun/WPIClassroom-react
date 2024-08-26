@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import BuildingTable from '../components/RoomTable';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { Typography, TextField, Grid } from '@mui/material';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'; // You can keep using this with moment
+import { Typography, TextField, Grid, Box } from '@mui/material';
+import moment from 'moment-timezone';
 import { buildingData } from '../data';
 
 // Utility function to get today's date in the US Northeast timezone
 const getTodayDateInUSEast = () => {
-  const now = new Date();
-  const offset = -4 * 60; // UTC offset for US Eastern Daylight Time (EDT)
-  const localTime = new Date(now.getTime() + offset * 60 * 1000);
-  return new Date(localTime.toISOString().split('T')[0]); // Get just the date part
+  return moment().tz('America/New_York').startOf('day').toDate();
 };
 
 const RoomDetailPage = () => {
@@ -25,7 +23,7 @@ const RoomDetailPage = () => {
   };
 
   return (
-    <div>
+    <Box sx={{ p: 3 }}>
       <Typography variant="h4" gutterBottom>
         {room} - {buildingName}
       </Typography>
@@ -44,7 +42,7 @@ const RoomDetailPage = () => {
       {selectedDevice && (
         <BuildingTable buildingName={buildingName} deviceId={selectedDevice.deviceId} date={date} />
       )}
-    </div>
+    </Box>
   );
 };
 
