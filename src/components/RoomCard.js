@@ -2,14 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { fetchLatestData } from '../dynamoDB/dynamodbService';
+import moment from 'moment-timezone';
 
 const RoomCard = ({ room, buildingName, deviceId }) => {
   const [latestData, setLatestData] = useState(null);
   const navigate = useNavigate();
 
+  const getEasternTimeDate = () => {
+    return moment.tz("America/New_York").format("YYYY-MM-DD");
+  };
+
   useEffect(() => {
     const fetchData = async () => {
-      const date = new Date().toISOString().split('T')[0];
+      const date = getEasternTimeDate();
+      console.log(date);
       const data = await fetchLatestData(deviceId, date);
       setLatestData(data);
     };
