@@ -16,7 +16,7 @@ const BuildingPage = () => {
       <Grid container spacing={2}>
         {data.map((item, index) => (
           <Grid item key={index} xs={12} sm={6} md={4}>
-            <RoomCard room={item.room} buildingName={buildingName} deviceId={item.deviceId} />
+            <RoomCard room={item.room} buildingName={buildingName} deviceId={item.deviceId} fullName={item.fullName} />
           </Grid>
         ))}
       </Grid>

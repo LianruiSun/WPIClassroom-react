@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { fetchData } from '../dynamoDB/dynamodbService';
+import { fetchData } from '../lambda/lambdaService';
 import { Column, Table, AutoSizer } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 import TestPage from './TestPage';
 
-const BuildingTable = ({ buildingName, deviceId, date }) => {
+const BuildingTable = ({ buildingName, deviceId, date, fullName }) => {
   const [data, setData] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
 
   const handleFetchData = useCallback(async () => {
     try {
       const formattedDate = date.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
-      const fetchedData = await fetchData(deviceId, formattedDate);
+      const fetchedData = await fetchData(fullName, formattedDate);
       console.log('Fetched Data:', fetchedData);
       setData(transformData(fetchedData));
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  }, [deviceId, date]);
+  }, [fullName, date]);
 
   useEffect(() => {
     if (deviceId && date) {
@@ -25,18 +25,19 @@ const BuildingTable = ({ buildingName, deviceId, date }) => {
     }
   }, [deviceId, date, handleFetchData]);
 
+  // Adjust this function to transform the fetched data correctly
   const transformData = (data) => {
     return data.map((entry) => ({
-      timestamp: entry.timestamp?.S || 'N/A',
-      co2: entry.co2?.N || 'N/A',
-      humid: entry.humid?.N || 'N/A',
-      light: entry.light?.N || 'N/A',
-      noise: entry.noise?.N || 'N/A',
-      pm10: entry.pm10?.N || 'N/A',
-      pm25: entry.pm25?.N || 'N/A',
-      score: entry.score?.N || 'N/A',
-      temp: entry.temp?.N || 'N/A',
-      voc: entry.voc?.N || 'N/A',
+      timestamp: entry['timestamp(America/New_York)'] || 'N/A',
+      co2: entry.co2 || 'N/A',
+      humid: entry.humid || 'N/A',
+      light: entry.light || 'N/A',
+      noise: entry.noise || 'N/A',
+      pm10: entry.pm10 || 'N/A',
+      pm25: entry.pm25 || 'N/A',
+      score: entry.score || 'N/A',
+      temp: entry['temp(°F)'] || 'N/A',
+      voc: entry.voc || 'N/A',
     }));
   };
 

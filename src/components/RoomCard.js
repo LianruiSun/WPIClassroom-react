@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { fetchLatestData } from '../dynamoDB/dynamodbService';
+import { fetchLatestData } from '../lambda/lambdaService';
 import moment from 'moment-timezone';
 
-const RoomCard = ({ room, buildingName, deviceId }) => {
+const RoomCard = ({ room, buildingName, deviceId, fullName }) => {
   const [latestData, setLatestData] = useState(null);
   const navigate = useNavigate();
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import BuildingTable from '../components/RoomTable';
+import RoomTable from '../components/RoomTable';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'; // You can keep using this with moment
 import { Typography, TextField, Grid, Box } from '@mui/material';
@@ -40,7 +40,12 @@ const RoomDetailPage = () => {
         </Grid>
       </Grid>
       {selectedDevice && (
-        <BuildingTable buildingName={buildingName} deviceId={selectedDevice.deviceId} date={date} />
+        <RoomTable
+          buildingName={buildingName}
+          deviceId={selectedDevice.deviceId}
+          date={date}
+          fullName={selectedDevice.fullName}
+        />
       )}
     </Box>
   );
