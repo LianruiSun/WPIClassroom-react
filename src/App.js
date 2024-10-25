@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useParams, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { CssBaseline, Box, IconButton, AppBar, Toolbar } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -8,7 +8,6 @@ import BuildingPage from './pages/BuildingPage';
 import RoomDetailPage from './pages/RoomDetailPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
-import { buildingData } from './data';
 import './App.css';
 import '@fontsource/poppins';
 import WpiLogo from './components/WpiLogo';
@@ -93,14 +92,9 @@ function App() {
           >
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/:buildingName/:room" element={<RoomDetailPageWrapper />} />
-
-              <Route
-                path="/:buildingName"
-                element={<BuildingPageWrapper />}
-              />
-
-              <Route path="*" element={<NotFoundPage />} />
+              <Route path="/NotFound" element={<NotFoundPage />} />
+              <Route path="/:buildingName/:room" element={<RoomDetailPage />} />
+              <Route path="/:buildingName" element={<BuildingPage />} />
             </Routes>
           </Box>
         </Box>
@@ -108,29 +102,5 @@ function App() {
     </ThemeProvider>
   );
 }
-
-// Wrapper component to handle both building and room validation
-const RoomDetailPageWrapper = () => {
-  const { buildingName, room } = useParams();
-
-  // Check if buildingName exists and room is valid for that building
-  if (!buildingData[buildingName] || !buildingData[buildingName].some((r) => r.room === room)) {
-    return <Navigate to="*" />;
-  }
-
-  return <RoomDetailPage />;
-};
-
-// Wrapper component to handle building name validation
-const BuildingPageWrapper = () => {
-  const { buildingName } = useParams();
-
-  // Direct validation without helper
-  if (!Object.keys(buildingData).includes(buildingName)) {
-    return <Navigate to="*" />;
-  }
-
-  return <BuildingPage />;
-};
 
 export default App;

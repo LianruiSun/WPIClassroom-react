@@ -3,10 +3,19 @@ import { Box, Typography } from '@mui/material';
 
 const NotFoundPage = () => (
   <Box sx={{ textAlign: 'center', padding: '40px' }}>
-    <Typography variant="h2" color="error" gutterBottom>
+    <Typography
+      variant="h2"
+      color="#AC2B37"
+      gutterBottom
+      sx={{ userSelect: 'none' }}
+    >
       404
     </Typography>
-    <Typography variant="h5">Page Not Found</Typography>
+    <Typography variant="h5"
+      sx={{ userSelect: 'none' }}
+    >
+      Page Not Found
+    </Typography>
   </Box>
 );
 
