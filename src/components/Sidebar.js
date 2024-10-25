@@ -43,12 +43,6 @@ const Sidebar = ({ open, onClose }) => {
             <ListItemText primary={building.name} />
           </ListItem>
         ))}
-        <ListItem button component={Link} to="/Test" key="Test" onClick={handleListItemClick}>
-          <ListItemIcon>
-            <Home />
-          </ListItemIcon>
-          <ListItemText primary="Test" />
-        </ListItem>
       </List>
     </Drawer>
   );

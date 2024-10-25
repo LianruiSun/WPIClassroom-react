@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, useParams, Navigate } from 'react-router-dom';
 import { CssBaseline, Box, IconButton, AppBar, Toolbar } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -7,7 +7,8 @@ import Sidebar from './components/Sidebar';
 import BuildingPage from './pages/BuildingPage';
 import RoomDetailPage from './pages/RoomDetailPage';
 import HomePage from './pages/HomePage';
-import TestPage from './pages/TestPage';
+import NotFoundPage from './pages/NotFoundPage';
+import { buildingData } from './data';
 import './App.css';
 import '@fontsource/poppins';
 import WpiLogo from './components/WpiLogo';
@@ -32,8 +33,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Box sx={{ display: 'flex', height: '100%'}}>
+        <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
           <CssBaseline />
+          {/* AppBar */}
           <AppBar
             position="fixed"
             sx={{
@@ -67,26 +69,38 @@ function App() {
                     maxHeight: 50,
                   }}
                 >
-                  <WpiLogo sx={{ height: '100%', width: 'auto' }} />
+                  <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <WpiLogo sx={{ height: '100%', width: 'auto' }} />
+                  </Link>
                 </Box>
               </Box>
             </Toolbar>
           </AppBar>
+
+          {/* Sidebar */}
           <Sidebar open={sidebarOpen} onClose={handleCloseSidebar} />
+
+          {/* Main content area */}
           <Box
             component="main"
             sx={{
               flexGrow: 1,
               marginLeft: sidebarOpen ? '240px' : '0',
               transition: 'margin-left 0.3s',
+              paddingTop: '64px',
+              overflow: 'auto',
             }}
           >
-            <Toolbar />
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/:buildingName" element={<BuildingPage />} />
-              <Route path="/:buildingName/:room" element={<RoomDetailPage />} />
-              <Route path="/Test" element={<TestPage />} />
+              <Route path="/:buildingName/:room" element={<RoomDetailPageWrapper />} />
+
+              <Route
+                path="/:buildingName"
+                element={<BuildingPageWrapper />}
+              />
+
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Box>
         </Box>
@@ -94,5 +108,29 @@ function App() {
     </ThemeProvider>
   );
 }
+
+// Wrapper component to handle both building and room validation
+const RoomDetailPageWrapper = () => {
+  const { buildingName, room } = useParams();
+
+  // Check if buildingName exists and room is valid for that building
+  if (!buildingData[buildingName] || !buildingData[buildingName].some((r) => r.room === room)) {
+    return <Navigate to="*" />;
+  }
+
+  return <RoomDetailPage />;
+};
+
+// Wrapper component to handle building name validation
+const BuildingPageWrapper = () => {
+  const { buildingName } = useParams();
+
+  // Direct validation without helper
+  if (!Object.keys(buildingData).includes(buildingName)) {
+    return <Navigate to="*" />;
+  }
+
+  return <BuildingPage />;
+};
 
 export default App;

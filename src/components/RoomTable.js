@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { fetchData } from '../lambda/lambdaService';
 import { Column, Table, AutoSizer } from 'react-virtualized';
 import 'react-virtualized/styles.css';
-import TestPage from './TestPage';
 
 const BuildingTable = ({ buildingName, deviceId, date, fullName }) => {
   const [data, setData] = useState([]);
@@ -58,7 +57,6 @@ const BuildingTable = ({ buildingName, deviceId, date, fullName }) => {
 
   return (
     <div style={{ height: '100vh', padding: '20px' }}>
-      <TestPage chartData={sortedData} /> {/* Pass the fetched data to TestPage */}
       <div style={{ flex: '1 1 auto', height: 'calc(100% - 60px)' }}>
         <AutoSizer>
           {({ height, width }) => (
